@@ -38,7 +38,7 @@
       if (!h.id) h.id = 'section-' + (i + 1);
       var li = document.createElement('li');
       li.innerHTML = '<span class="toc-n">' + (i + 1) + '</span><a href="#' + h.id + '"></a>';
-      li.querySelector('a').textContent = h.textContent;
+      li.querySelector('a').textContent = h.textContent.split(':')[0];
       toc.querySelector('ol').appendChild(li);
     });
   })();
