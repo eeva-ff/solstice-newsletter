@@ -47,8 +47,8 @@ main { max-width: 720px; margin: 0 auto; padding: 96px 0 120px; }
   font: 600 11px/14px var(--sans); letter-spacing: 0.66px; text-transform: uppercase; color: var(--label);
 }
 h1 {
-  font: 300 64px/1.04 var(--serif); letter-spacing: -2.24px;
-  margin: 20px 0 20px; text-wrap: balance;
+  font: 300 46px/1.1 var(--serif); letter-spacing: -1.4px;
+  margin: 20px 0 20px; white-space: nowrap;
 }
 h1 a { color: inherit; text-decoration: none; }
 .meta { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 14px; line-height: 20px; color: var(--muted); }
@@ -111,7 +111,7 @@ h1 a { color: inherit; text-decoration: none; }
   .site-header { padding: 20px 16px; }
   .site-header nav a { margin-left: 16px; }
   main { padding: 64px 16px 96px; }
-  h1 { font-size: 38px; letter-spacing: -1.33px; }
+  h1 { font-size: 34px; letter-spacing: -1px; white-space: normal; text-wrap: balance; }
   .article-body h2 { font-size: 28px; }
   .archive-title { font-size: 24px; }
 }
