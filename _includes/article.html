@@ -42,4 +42,15 @@
       toc.querySelector('ol').appendChild(li);
     });
   })();
+
+  // Play/pause buttons on highlight clips.
+  document.querySelectorAll('.clip').forEach(function (clip) {
+    var v = clip.querySelector('video');
+    var b = document.createElement('button');
+    b.type = 'button'; b.className = 'clip-toggle';
+    var sync = function () { b.classList.toggle('is-paused', v.paused); b.setAttribute('aria-label', v.paused ? 'Play' : 'Pause'); };
+    b.addEventListener('click', function () { v.paused ? v.play() : v.pause(); });
+    v.addEventListener('play', sync); v.addEventListener('pause', sync); sync();
+    clip.appendChild(b);
+  });
 </script>
