@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% if page.title %}{{ page.title }} · {% endif %}{{ site.title }}</title>
+  <link rel="stylesheet" href="{{ '/assets/style.css' | relative_url }}">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="{{ '/' | relative_url }}">☀️ {{ site.title }}</a>
+    <nav>
+      <a href="{{ '/' | relative_url }}">Latest</a>
+      <a href="{{ '/archive/' | relative_url }}">Archive</a>
+    </nav>
+  </header>
+  <main>
+    {{ content }}
+  </main>
+  <footer class="site-footer">Questions or requests? Ping Eeva in #product-feedback.</footer>
+</body>
+</html>
