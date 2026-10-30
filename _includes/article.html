@@ -8,7 +8,6 @@
     <p class="meta">
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
       <span class="dot"></span>{{ minutes }} min read
-      <span class="dot"></span>{{ post.author | default: "Eeva Foo" }}
     </p>
   </header>
   <div class="article-body">
