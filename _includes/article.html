@@ -8,16 +8,8 @@
     <p class="meta">
       <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
       <span class="dot"></span>{{ minutes }} min read
-      <span class="dot"></span><span class="love-total" title="Reactions on this edition">❤️ <b>0</b></span>
     </p>
-    <div class="reactions" data-key="{{ post.date | date: '%Y-%m-%d' }}" aria-label="Drop some love">
-      <span class="reactions-label">Drop some love</span>
-      <button type="button" data-name="heart" aria-pressed="false">❤️ <span>0</span></button>
-      <button type="button" data-name="fire" aria-pressed="false">🔥 <span>0</span></button>
-      <button type="button" data-name="tada" aria-pressed="false">🎉 <span>0</span></button>
-      <button type="button" data-name="raised-hands" aria-pressed="false">🙌 <span>0</span></button>
-      <button type="button" data-name="eyes" aria-pressed="false">👀 <span>0</span></button>
-    </div>
+    <button type="button" class="love" aria-label="Drop some love">❤️ <span>Drop some love</span></button>
   </header>
   <div class="article-body">
     {% if post.intro %}<p class="intro">{{ post.intro | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
@@ -62,45 +54,32 @@
     clip.appendChild(b);
   });
 
-  // Reactions: shared counts live in a free public counter (abacus), one counter per
-  // edition and emoji. Each browser can react once per emoji; there is no un-react.
-  document.querySelectorAll('.reactions').forEach(function (bar) {
-    var api = 'https://abacus.jasoncameron.dev';
-    var ns = 'solstice-newsletter';
-    var edition = bar.dataset.key;
-    var total = bar.closest('.post-header').querySelector('.love-total b');
-    var buttons = bar.querySelectorAll('button');
-    var store = 'reacted:' + edition;
-    var mine = {};
-    try { mine = JSON.parse(localStorage.getItem(store)) || {}; } catch (e) {}
-
-    var sum = function () {
-      var n = 0;
-      buttons.forEach(function (b) { n += parseInt(b.querySelector('span').textContent, 10) || 0; });
-      total.textContent = n;
-    };
-    var show = function (b, n) { b.querySelector('span').textContent = n; sum(); };
-
-    buttons.forEach(function (b) {
-      var key = edition + '-' + b.dataset.name;
-      if (mine[b.dataset.name]) { b.classList.add('is-mine'); b.setAttribute('aria-pressed', 'true'); }
-      fetch(api + '/get/' + ns + '/' + key)
-        .then(function (r) { return r.ok ? r.json() : { value: 0 }; })
-        .then(function (d) { show(b, d.value || 0); })
-        .catch(function () {});
-
-      b.addEventListener('click', function () {
-        if (mine[b.dataset.name]) return;
-        mine[b.dataset.name] = true;
-        try { localStorage.setItem(store, JSON.stringify(mine)); } catch (e) {}
-        b.classList.add('is-mine', 'pop'); b.setAttribute('aria-pressed', 'true');
-        setTimeout(function () { b.classList.remove('pop'); }, 300);
-        show(b, (parseInt(b.querySelector('span').textContent, 10) || 0) + 1);
-        fetch(api + '/hit/' + ns + '/' + key)
-          .then(function (r) { return r.json(); })
-          .then(function (d) { if (d.value) show(b, d.value); })
-          .catch(function () {});
-      });
+  // Drop some love: a burst of hearts on the reader's own screen. Nothing is counted or saved.
+  document.querySelectorAll('.love').forEach(function (btn) {
+    var hearts = ['❤️', '🧡', '💖', '💕', '💗'];
+    btn.addEventListener('click', function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var r = btn.getBoundingClientRect();
+      var x0 = r.left + r.width / 2, y0 = r.top + r.height / 2;
+      var n = reduce ? 6 : 36;
+      btn.classList.remove('pop'); void btn.offsetWidth; btn.classList.add('pop');
+      for (var i = 0; i < n; i++) {
+        var h = document.createElement('span');
+        h.className = 'heart-burst';
+        h.textContent = hearts[i % hearts.length];
+        var angle = -Math.PI / 2 + (Math.random() - 0.5) * Math.PI * 1.4;
+        var dist = 120 + Math.random() * 260;
+        h.style.left = x0 + 'px';
+        h.style.top = y0 + 'px';
+        h.style.fontSize = (16 + Math.random() * 18) + 'px';
+        h.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+        h.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+        h.style.setProperty('--rot', (Math.random() - 0.5) * 80 + 'deg');
+        h.style.animationDelay = Math.random() * 120 + 'ms';
+        h.style.animationDuration = (reduce ? 600 : 1100 + Math.random() * 700) + 'ms';
+        document.body.appendChild(h);
+        h.addEventListener('animationend', function () { this.remove(); });
+      }
     });
   });
 </script>
