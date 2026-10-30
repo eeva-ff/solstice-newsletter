@@ -127,3 +127,18 @@ h1 a { color: inherit; text-decoration: none; }
 .clip-toggle::before { content: ""; width: 10px; height: 12px; border-left: 3px solid currentColor; border-right: 3px solid currentColor; }
 .clip-toggle.is-paused::before { width: 0; height: 0; border: 0; border-left: 11px solid currentColor;
   border-top: 7px solid transparent; border-bottom: 7px solid transparent; margin-left: 3px; }
+
+/* Reactions, Slack style */
+.love-total b { font-weight: 600; color: var(--text); }
+.reactions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 20px; }
+.reactions-label { font: 600 11px/14px var(--sans); letter-spacing: 0.66px; text-transform: uppercase; color: var(--label); margin-right: 4px; }
+.reactions button {
+  display: inline-flex; align-items: center; gap: 6px; height: 30px; padding: 0 11px;
+  border: 1px solid rgba(29, 28, 26, 0.1); border-radius: 15px; background: var(--surface);
+  font: 500 14px/1 var(--sans); color: var(--label); cursor: pointer; box-shadow: var(--shadow);
+  transition: border-color 120ms, background 120ms, transform 120ms;
+}
+.reactions button:hover { border-color: rgba(29, 28, 26, 0.25); transform: translateY(-1px); }
+.reactions button.is-mine { background: #fff1e6; border-color: #f3a06c; color: var(--link); cursor: default; }
+.reactions button.is-mine:hover { transform: none; }
+.reactions button.pop { transform: scale(1.12); }
