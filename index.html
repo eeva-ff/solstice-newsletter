@@ -3,14 +3,7 @@ layout: default
 ---
 {% assign latest = site.posts.first %}
 {% if latest %}
-<article class="issue">
-  <p class="eyebrow">Latest issue · {{ latest.date | date: "%A %-d %B %Y" }}</p>
-  <h1><a href="{{ latest.url | relative_url }}">{{ latest.title }}</a></h1>
-  {{ latest.content }}
-</article>
-{% if site.posts.size > 1 %}
-<p class="more"><a href="{{ '/archive/' | relative_url }}">Previous issues →</a></p>
-{% endif %}
+{% include article.html post=latest link=true %}
 {% else %}
-<p>The first issue is on its way.</p>
+<p>The first edition is on its way.</p>
 {% endif %}

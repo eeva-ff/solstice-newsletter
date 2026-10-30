@@ -1,0 +1,45 @@
+{% assign post = include.post %}
+{% assign words = post.content | strip_html | number_of_words %}
+{% assign minutes = words | divided_by: 200 | plus: 1 %}
+<article class="article">
+  <header class="post-header">
+    <span class="tag">{{ post.tag | default: "Product" }}</span>
+    <h1>{% if include.link %}<a href="{{ post.url | relative_url }}">{{ post.title }}</a>{% else %}{{ post.title }}{% endif %}</h1>
+    <p class="meta">
+      <time datetime="{{ post.date | date_to_xmlschema }}">{{ post.date | date: "%b %-d, %Y" }}</time>
+      <span class="dot"></span>{{ minutes }} min read
+      <span class="dot"></span>{{ post.author | default: "Eeva Foo" }}
+    </p>
+  </header>
+  <div class="article-body">
+    {% if post.intro %}<p class="intro">{{ post.intro | markdownify | remove: '<p>' | remove: '</p>' | strip }}</p>{% endif %}
+    <nav class="toc" aria-label="In this edition">
+      <div class="toc-label">In this edition</div>
+      <ol></ol>
+    </nav>
+    {{ post.content }}
+  </div>
+  <aside class="end-panel">
+    <div>
+      <p class="end-label">What’s new at Solstice</p>
+      <p class="end-line">A new edition every week. Questions or requests? Find Eeva in #product-feedback.</p>
+    </div>
+    <a class="end-button" href="{{ '/archive/' | relative_url }}">See past editions</a>
+  </aside>
+</article>
+<script>
+  // Build "In this edition" from the section headings, as the solsticehealth.co posts do.
+  (function () {
+    var body = document.currentScript.previousElementSibling.querySelector('.article-body');
+    var toc = body.querySelector('.toc');
+    var heads = body.querySelectorAll('h2:not(.no-toc)');
+    if (heads.length < 2) { toc.remove(); return; }
+    heads.forEach(function (h, i) {
+      if (!h.id) h.id = 'section-' + (i + 1);
+      var li = document.createElement('li');
+      li.innerHTML = '<span class="toc-n">' + (i + 1) + '</span><a href="#' + h.id + '"></a>';
+      li.querySelector('a').textContent = h.textContent;
+      toc.querySelector('ol').appendChild(li);
+    });
+  })();
+</script>

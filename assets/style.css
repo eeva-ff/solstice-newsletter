@@ -1,48 +1,113 @@
+/* Matches the solsticehealth.co product-updates posts: Spectral Light headings,
+   Aileron body, warm off-white page, white cards. */
 :root {
-  --bg: #fbfaf7;
+  --bg: #f3f1ee;
   --surface: #ffffff;
-  --text: #1f1d1a;
-  --muted: #6b665e;
-  --accent: #c2410c;
-  --border: #e7e3dc;
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --bg: #161513;
-    --surface: #1f1d1a;
-    --text: #ece8e1;
-    --muted: #a39d93;
-    --accent: #fb923c;
-    --border: #34312c;
-  }
+  --text: #1d1c1a;
+  --label: #5e5a53;
+  --muted: #77716a;
+  --dot: #d6cfc6;
+  --media: #ece5df;
+  --link: #c35a04;
+  --link-hover: #a85600;
+  --hairline: rgba(29, 28, 26, 0.07);
+  --shadow: 0 1px 2px rgba(29, 28, 26, 0.04), 0 2px 8px rgba(29, 28, 26, 0.04);
+  --serif: "Spectral", Georgia, serif;
+  --sans: "Aileron", "Helvetica Neue", Arial, sans-serif;
 }
 * { box-sizing: border-box; }
+html { background: var(--bg); }
 body {
   margin: 0;
   background: var(--bg);
   color: var(--text);
-  font: 17px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font: 400 17px/1.65 var(--sans);
+  -webkit-font-smoothing: antialiased;
 }
-a { color: var(--accent); }
-.site-header, main, .site-footer { max-width: 720px; margin: 0 auto; padding: 0 16px; }
+a { color: var(--link); }
+a:hover { color: var(--link-hover); }
+
+/* Site header */
 .site-header {
+  max-width: 1200px; margin: 0 auto; padding: 24px 60px;
   display: flex; justify-content: space-between; align-items: center;
-  padding-top: 24px; padding-bottom: 24px; border-bottom: 1px solid var(--border);
 }
-.brand { font-weight: 700; color: var(--text); text-decoration: none; }
-.site-header nav a { margin-left: 16px; color: var(--muted); text-decoration: none; }
-.site-header nav a:hover { color: var(--accent); }
-main { padding-top: 32px; padding-bottom: 48px; }
-h1 { font-size: 1.9rem; line-height: 1.2; margin: 0 0 24px; }
+.brand { font: 600 15px/1 var(--sans); color: var(--text); text-decoration: none; }
+.brand span { color: var(--muted); font-weight: 400; margin-left: 4px; }
+.site-header nav a { margin-left: 24px; font-size: 14px; color: var(--label); text-decoration: none; }
+.site-header nav a:hover { color: var(--text); }
+
+main { max-width: 720px; margin: 0 auto; padding: 96px 0 120px; }
+
+/* Post header */
+.tag {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 8px;
+  background: rgba(29, 28, 26, 0.06); border-radius: 4px;
+  font: 600 11px/14px var(--sans); letter-spacing: 0.66px; text-transform: uppercase; color: var(--label);
+}
+h1 {
+  font: 300 64px/1.04 var(--serif); letter-spacing: -2.24px;
+  margin: 20px 0 20px; text-wrap: balance;
+}
 h1 a { color: inherit; text-decoration: none; }
-h2 { font-size: 1.2rem; margin: 36px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); }
-.eyebrow { color: var(--muted); font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.06em; margin: 0 0 8px; }
-.issue ul { padding-left: 20px; }
-.issue li { margin: 8px 0; }
-.more { margin-top: 40px; }
-.archive { list-style: none; padding: 0; }
-.archive li { padding: 16px 0; border-bottom: 1px solid var(--border); }
-.archive a { font-weight: 600; text-decoration: none; }
-.archive time { color: var(--muted); font-size: 0.9rem; margin-left: 8px; }
-.archive p { margin: 4px 0 0; color: var(--muted); }
-.site-footer { color: var(--muted); font-size: 0.85rem; padding-bottom: 32px; }
+.meta { display: flex; align-items: center; gap: 10px; margin: 0; font-size: 14px; line-height: 20px; color: var(--muted); }
+.dot { width: 3px; height: 3px; border-radius: 50%; background: var(--dot); }
+
+/* Body */
+.article-body { margin-top: 48px; }
+.article-body p { margin: 0 0 19px; }
+.article-body h2 {
+  font: 300 33px/1.2 var(--serif); letter-spacing: -0.02em;
+  margin: 56px 0 18px; scroll-margin-top: 24px;
+}
+.article-body ul { padding-left: 22px; margin: 0 0 19px; }
+.article-body li { margin: 0 0 10px; padding-left: 4px; }
+.article-body strong { font-weight: 600; }
+.article-body img, .article-body video {
+  display: block; width: 100%; border-radius: 6px; background: var(--media);
+  box-shadow: 0 1px 2px rgba(29, 28, 26, 0.04), 0 4px 12px rgba(29, 28, 26, 0.05);
+  margin: 28px 0 0;
+}
+
+/* In this edition */
+.toc { margin: 36px 0 0; padding: 22px 24px; background: var(--surface); border-radius: 8px; box-shadow: var(--shadow); }
+.toc-label { font: 600 12px/16px var(--sans); letter-spacing: 0.06em; text-transform: uppercase; color: var(--label); margin: 0 0 12px; }
+.toc ol { list-style: none; margin: 0; padding: 0; }
+.toc li { display: flex; gap: 14px; align-items: baseline; padding: 8px 0; margin: 0; border-top: 1px solid var(--hairline); font-size: 16px; line-height: 1.5; }
+.toc li:first-child { border-top: 0; }
+.toc-n { font: 600 12px/16px var(--sans); color: var(--muted); font-variant-numeric: tabular-nums; min-width: 14px; }
+.toc a { color: var(--text); text-decoration: none; border-bottom: 1px solid rgba(29, 28, 26, 0.12); transition: border-color 100ms; }
+.toc a:hover { color: var(--text); border-bottom-color: var(--text); }
+
+/* End panel */
+.end-panel {
+  margin-top: 64px; padding: 28px; background: var(--surface); border-radius: 8px; box-shadow: var(--shadow);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 20px 32px;
+}
+.end-label { margin: 0; font: 300 24px/1.2 var(--serif); letter-spacing: -0.02em; }
+.end-line { margin: 4px 0 0; font-size: 15px; color: var(--muted); text-wrap: balance; }
+.end-button {
+  display: inline-flex; align-items: center; height: 40px; padding: 0 18px; border-radius: 6px;
+  background: var(--text); color: #fff; font: 600 14px/1 var(--sans); text-decoration: none; white-space: nowrap;
+}
+.end-button:hover { color: #fff; opacity: 0.88; }
+
+/* Archive */
+.archive-sub { color: var(--muted); margin: 0 0 40px; }
+.archive { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+.archive a {
+  display: block; padding: 24px 28px; background: var(--surface); border-radius: 8px; box-shadow: var(--shadow);
+  color: var(--text); text-decoration: none; transition: transform 120ms;
+}
+.archive a:hover { color: var(--text); transform: translateY(-1px); }
+.archive time { font-size: 13px; color: var(--muted); }
+.archive-title { display: block; font: 300 28px/1.2 var(--serif); letter-spacing: -0.02em; margin: 6px 0; }
+.archive-summary { display: block; font-size: 15px; color: var(--label); }
+
+@media (max-width: 809px) {
+  .site-header { padding: 20px 16px; }
+  main { padding: 64px 16px 96px; }
+  h1 { font-size: 38px; letter-spacing: -1.33px; }
+  .article-body h2 { font-size: 28px; }
+  .archive-title { font-size: 24px; }
+}
